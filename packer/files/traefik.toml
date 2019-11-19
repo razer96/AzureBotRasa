@@ -1,0 +1,46 @@
+debug = false
+
+logLevel = "INFO"
+defaultEntryPoints = ["https","http"]
+
+[entryPoints]
+  [entryPoints.http]
+    address = ":80"
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+    [entryPoints.https]
+      address = ":443"
+    [entryPoints.https.tls]
+    [entryPoints.traefik]
+      address = ":8080"
+[retry]
+
+[api]
+  entryPoint = "traefik"
+  dashboard = true
+
+[acme]
+  email = "uir@halykbank.kz"
+  storage = "acme.json"
+  entryPoint = "https"
+  onHostRule = true
+[acme.httpChallenge]
+  entryPoint = "http"
+
+[file]
+
+[backends]
+  [backends.rasa]
+    [backends.rasa.servers]
+      [backends.rasa.servers.server0]
+        url = "http://base:5005"
+
+[frontends]
+  [frontends.rasa-front]
+    entryPoints = ["http", "https"]
+    backend = "rasa"
+    passHostHeader = true
+    [frontends.rasa-front.routes]
+      [frontends.rasa-front.routes.main]
+        # rule = "Host:azurebot.cloud.halykbank.kz"
+        rule = "Host:azurebot.cloud.halykbank.kz"

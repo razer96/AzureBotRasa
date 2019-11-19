@@ -1,0 +1,65 @@
+{
+    "builders": [
+      {
+        "type": "azure-arm",
+  
+        "client_id": "{{user `arm_client_id`}}",
+        "client_secret": "{{user `arm_client_secret`}}",
+        "tenant_id": "{{user `arm_tenant_id`}}",
+        "subscription_id": "{{user `arm_subscription_id`}}",
+        "managed_image_resource_group_name": "DevOps",
+  
+        "managed_image_name": "rasa",
+  
+        "os_type": "Linux",
+        "image_publisher": "Canonical",
+        "image_offer": "UbuntuServer",
+        "image_sku": "18.04-LTS",
+  
+        "azure_tags": {
+          "environment": "Tools",
+          "application": "HB-Azure-Bot"
+        },
+  
+        "location": "North Europe",
+        "vm_size": "Standard_B2ms"
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "file",
+        "source": "packer/files",
+        "destination": "/home/packer"
+      },
+      {
+        "type":"shell",
+        "inline":[
+          "sudo mkdir -p /etc/hb-azure-bot",
+          "sudo mv /home/packer/files/* /etc/hb-azure-bot"
+        ]
+      },
+      {
+        "type": "shell",
+        "inline": [
+          "sudo apt-get update",
+          "sudo apt-get upgrade -y",
+          "sudo apt-get -y autoremove"
+        ]
+      },
+      {
+        "type": "shell",
+        "inline": [
+          "sudo apt-get install -y docker.io",
+          "sudo apt-get install -y docker-compose"
+        ]
+      },
+      {
+        "type": "shell",
+        "inline": [
+          "sudo cloud-init clean --logs",
+          "sudo waagent -deprovision+user -force"
+        ]
+      }
+    ]
+  }
+  

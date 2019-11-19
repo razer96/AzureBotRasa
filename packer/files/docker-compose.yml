@@ -1,0 +1,35 @@
+version: '3.1'
+
+services:
+  base:
+    image: 'razer0960/hb-azure-bot:main'
+    container_name: rasa-base
+    restart: unless-stopped
+    expose:
+      - "5005"
+    depends_on:
+      - actions
+    env_file:
+      - azure-bot.env
+    command: run
+    volumes:
+      - /etc/hb-azure-bot/models/:/app/models/
+  actions:
+    image: 'razer0960/hb-azure-bot:sdk'
+    restart: unless-stopped
+    env_file:
+      - azure-bot.env
+    container_name: actions-server
+    volumes:
+      - /etc/hb-azure-bot/models/:/app/models/
+  traefik:
+    image: traefik:v1.7.12-alpine
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    volumes:
+      - /etc/hb-azure-bot/traefik.toml:/traefik.toml
+      - /etc/hb-azure-bot/projects/azurebot/acme.json:/acme.json
+    container_name: traefik

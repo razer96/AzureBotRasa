@@ -1,0 +1,10 @@
+packer/
+terraform/
+Dockerfile
+Makefile
+requirements.txt
+*.env
+__pycache__/
+acme.json
+README.md
+models/

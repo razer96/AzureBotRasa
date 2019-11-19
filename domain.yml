@@ -1,0 +1,47 @@
+%YAML 1.1
+---
+actions:
+- action_create_user
+- action_invite_user
+- action_reset_password
+- utter_create_confirm
+- utter_invitation
+- utter_refuse
+- utter_unclear
+- utter_wait
+- utter_wait_reseting
+- utter_reset_confirm
+- utter_welcome
+- utter_registrate_info
+- utter_passreset_info
+- custom_fallback_action
+intents:
+- hello
+- create_user
+- positive
+- reset_password
+- negative
+slots:
+  current_password:
+    type: text
+templates:
+  utter_create_confirm:
+  - text: Are you sure you want to be registrated in Azure Portal? (Yes/No)
+  utter_invitation:
+  - text: Now you're going to be invited to UIR directory
+  utter_refuse:
+  - text: Ok, let's continue later
+  utter_unclear:
+  - text: I don't understand you
+  utter_wait:
+  - text: Please, wait. Registration may take a little time...
+  utter_wait_reseting:
+  - text: Please, wait for reseting. It may take a little time...
+  utter_reset_confirm:
+  - text: Are you sure you want to reset your password? (Yes/No)
+  utter_welcome:
+  - text: Hello my dear friend!!!
+  utter_registrate_info:
+  - text: If you want to be registrated in Azure Portal, just send me something like "Registrate me" or "Create new account"
+  utter_passreset_info:
+  - text: If you foregot the password and you want to reset it, just write something like "Reset password" or "I need a new password"

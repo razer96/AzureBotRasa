@@ -1,0 +1,4 @@
+FROM rasa/rasa-sdk:1.2.4
+
+WORKDIR /app
+COPY . /app

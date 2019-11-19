@@ -1,0 +1,8 @@
+/terraform
+/packer
+Dockerfile
+.gitignore
+docker-compose.yml
+Makefile
+traefic.toml
+.env
